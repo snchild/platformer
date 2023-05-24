@@ -9,7 +9,7 @@ SCREEN_TITLE = "Sierra's Platformer"
 
 def main ():
     myWindow = MyGameClass.myGame(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
-    myWindow.setup()
+    myWindow.setup(SCREEN_WIDTH, SCREEN_HEIGHT)
     arcade.run() #begins gameplay loop
 
 if __name__ == "__main__":

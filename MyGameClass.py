@@ -6,12 +6,12 @@ class myGame(arcade.Window): #myGame's parent class is arcade.Window
         print("initializing myGame...")
         #how to call the parent class and initialize it in python
         super().__init__(width, height, title)
-        arcade.set_background_color(arcade.csscolor.DIM_GRAY) #will be the dirt
+        arcade.set_background_color(arcade.color.COFFEE) #will be the dirt
 
         self.player_list = None
         self.walls_list = None
     
-    def setup(self):
+    def setup(self, width, height):
         #setting up the sprites here makes it easier to incorporate a reset button in the game
         
         #set up player sprite
@@ -25,10 +25,20 @@ class myGame(arcade.Window): #myGame's parent class is arcade.Window
         self.player_list.append(self.player_sprite)
 
         #set up walls/obstacles
-        wall_path = "images\ground.png"
-        wall = arcade.Sprite(wall_path, 0.5)
-        wall.position = [360,360]
-        self.walls_list.append(wall)
+        soil_path = "images\soil_1.png"
+
+        #places soil along top and bottom of window
+        for x in range(32, width, 64):
+            #make walls, append them
+            wallbottom = arcade.Sprite(soil_path, 0.5)
+            wallbottom.position = [x,32]
+            self.walls_list.append(wallbottom)
+
+            walltop = arcade.Sprite(soil_path, 0.5)
+            walltop.position = [x,height - 32]
+            self.walls_list.append(walltop)
+
+        
 
 
 
