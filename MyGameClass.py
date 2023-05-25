@@ -9,8 +9,8 @@ class myGame(arcade.Window): #myGame's parent class is arcade.Window
         arcade.set_background_color(arcade.color.COFFEE) #will be the dirt
 
         self.player_list = None
-        self.scene = None #scene object (all the walls)
-        #self.walls_list = None
+        self.scene = arcade.Scene() #scene object (all the walls)
+        self.physics_engine = None #physics engine
     
     def setup(self, width, height):
         #setting up the sprites here makes it easier to incorporate a reset button in the game
@@ -25,7 +25,7 @@ class myGame(arcade.Window): #myGame's parent class is arcade.Window
         #origin of the screen is the bottom left corner
         self.player_sprite.center_x = 120
         self.player_sprite.center_y = 120
-        self.scene.add_aprite("Player", self.player_sprite)
+        self.scene.add_sprite("Player", self.player_sprite)
         
         #set up walls/obstacles
         soil_path = "images\soil_1.png"
@@ -49,6 +49,31 @@ class myGame(arcade.Window): #myGame's parent class is arcade.Window
         #set up game physics
         self.physics_engine = arcade.PhysicsEngineSimple(self.player_sprite, self.scene.get_sprite_list("Walls"))
 
+    def on_key_press(self, key, modifiers):
+        speed = 5
+        #have to used multiple if and elif statements because python has to switch case functions built in
+        if key == arcade.key.UP or key == arcade.key.W:
+            self.player_sprite.change_y = speed
+        elif key == arcade.key.DOWN or key == arcade.key.S:
+            self.player_sprite.change_y = -speed
+        elif key == arcade.key.LEFT or key == arcade.key.A:
+            self.player_sprite.change_x = -speed
+        elif key == arcade.key.RIGHT or key == arcade.key.D:
+            self.player_sprite.change_x = speed
+
+    def on_key_release(self, key, modifiers):
+        #have to used multiple if and elif statements because python has to switch case functions built in
+        if key == arcade.key.UP or key == arcade.key.W:
+            self.player_sprite.change_y = 0
+        elif key == arcade.key.DOWN or key == arcade.key.S:
+            self.player_sprite.change_y = 0
+        elif key == arcade.key.LEFT or key == arcade.key.A:
+            self.player_sprite.change_x = 0
+        elif key == arcade.key.RIGHT or key == arcade.key.D:
+            self.player_sprite.change_x = 0
+
+    def on_update(self, delta_time):
+        self.physics_engine.update()
 
 
     def on_draw(self):
