@@ -16,6 +16,8 @@ class myGame(arcade.Window): #myGame's parent class is arcade.Window
         self.physics_engine = None #physics engine
         self.player_sprite = None
 
+        self.camera = None
+
     def setup(self, width, height):
         #setting up the sprites here makes it easier to incorporate a reset button in the game
         #we can use scene instead of player lists and wall lists
@@ -52,6 +54,8 @@ class myGame(arcade.Window): #myGame's parent class is arcade.Window
         self.physics_engine = arcade.PhysicsEnginePlatformer(self.player_sprite, gravity_constant = self.gravity, walls = self.scene["Walls"])
         #platforms will be walls that can move
 
+        self.camera = arcade.Camera(self.width, self.height)
+
     def on_key_press(self, key, modifiers):
         #have to used multiple if and elif statements because python has to switch case functions built in
         if key == arcade.key.UP or key == arcade.key.W:
@@ -69,8 +73,23 @@ class myGame(arcade.Window): #myGame's parent class is arcade.Window
         elif key == arcade.key.RIGHT or key == arcade.key.D:
             self.player_sprite.change_x = 0
 
+    def center_camera_on_player(self):
+        screen_center_x = self.player_sprite.center_x - (self.camera.viewport_width / 2)
+        screen_center_y = self.player_sprite.center_y - (self.camera.viewport_height / 2)
+
+        #prevents camera from moving past 0
+        if screen_center_x < 0:
+            screen_center_x = 0
+        if screen_center_y < 0:
+            screen_center_y = 0
+
+        player_centered = screen_center_x, screen_center_y
+        self.camera.move_to(player_centered)
+    
     def on_update(self, delta_time):
         self.physics_engine.update()
+
+        self.center_camera_on_player()
 
 
     def on_draw(self):
@@ -79,3 +98,4 @@ class myGame(arcade.Window): #myGame's parent class is arcade.Window
 
         #draw the objects on the screen
         self.scene.draw()
+        self.camera.use()
