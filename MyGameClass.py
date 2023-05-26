@@ -56,13 +56,20 @@ class myGame(arcade.Window): #myGame's parent class is arcade.Window
             self.scene.add_sprite("Walls",wallright)
 
         #place soil in other specific places
-        ledge_one = [[i, 250] for i in range(86, 832, 64)]
-        fence_one = [[1000,j] for j in range(86, 151,64)]
-        fence_two = [[2000,j] for j in range(86, 151,64)]
-        ledge_two = [[i, 300] for i in range(1128, 1896, 64)]
-        ledge_three = [[2064,214], [2064,278]] + [[i,342] for i in range(2128, 2704, 64)] + [[2896,182], [2832,18250]]
+        f_1 = [[i, 250] for i in range(86, 832, 64)]
+        f_2 = [[1000,j] for j in range(86, 151,64)]
+        f_3 = [[i, 300] for i in range(1128, 1896, 64)] + [[2000,j] for j in range(86, 151,64)]
+        f_4 = [[2064,214], [2064,278]] + [[i,342] for i in range(2128, 2704, 64)] + [[2896,182], [2832,182]]
+        f_5 = [[i, 650] for i in range(278, 663, 64)] + [[i, 842] for i in range(470, 662, 64)] + [[598,1034], [662,1034], [726,1162], [918, 1162]]
+        f_6 = [[668,420], [732,420]] + [[i, 548] for i in range(892, 1724, 64)] + [[1724,484]] + [[1276, j] for j in range(612, 741, 64)]
+        f_7 = [[i, 804] for i in range(1340, 1661, 64)] + [[1468, j] for j in range(868, 1125, 64)] + [[i, 1188] for i in range(1148, 1597, 64)]
+        f_8 = [[i, 676] for i in range(1852, 2129, 64)]
+        f_9 = [[i, 534] for i in range(2448, 2769, 64)]
+        f_10 = [[i, 804] for i in range(2256, 2768, 64)] + [[2320,868], [2960,804]]
+        f_11 = [[1596, j] for j in range(1252, 1700, 64)] + [[1468,1380],[1532,1380], [1532, 1508]]
+        f_12 = [[1852,932]]
 
-        soil_coordinates = ledge_one + fence_one + fence_two + ledge_two + ledge_three
+        soil_coordinates = f_1 + f_2 + f_3 + f_4 + f_5 + f_6 + f_7 + f_8 + f_9 + f_10 + f_11 + f_12
         for coor in soil_coordinates:
             wall = arcade.Sprite(soil_path, 0.5)
             wall.position = coor
