@@ -18,7 +18,7 @@ class myGame(arcade.Window): #myGame's parent class is arcade.Window
 
         self.camera = None
 
-    def setup(self, width, height):
+    def setup(self, width, height, camera_width, camera_height):
         #setting up the sprites here makes it easier to incorporate a reset button in the game
         #we can use scene instead of player lists and wall lists
         self.scene = arcade.Scene() 
@@ -45,16 +45,34 @@ class myGame(arcade.Window): #myGame's parent class is arcade.Window
             walltop.position = [x,height - 32]
             self.scene.add_sprite("Walls",walltop)
 
+        for y in range(32, height, 64):
+            #make walls, append them
+            wallleft = arcade.Sprite(soil_path, 0.5)
+            wallleft.position = [32,y]
+            self.scene.add_sprite("Walls",wallleft)
+
+            wallright = arcade.Sprite(soil_path, 0.5)
+            wallright.position = [width - 32,y]
+            self.scene.add_sprite("Walls",wallright)
+
         #place soil in other specific places
-        wall = arcade.Sprite(soil_path, 0.5)
-        wall.position = [360,360]
-        self.scene.add_sprite("Walls",wall)
+        ledge_one = [[i, 250] for i in range(86, 832, 64)]
+        fence_one = [[1000,j] for j in range(86, 151,64)]
+        fence_two = [[2000,j] for j in range(86, 151,64)]
+        ledge_two = [[i, 300] for i in range(1128, 1896, 64)]
+        ledge_three = [[2064,214], [2064,278]] + [[i,342] for i in range(2128, 2704, 64)] + [[2896,182], [2832,18250]]
+
+        soil_coordinates = ledge_one + fence_one + fence_two + ledge_two + ledge_three
+        for coor in soil_coordinates:
+            wall = arcade.Sprite(soil_path, 0.5)
+            wall.position = coor
+            self.scene.add_sprite("Walls",wall)
 
         #set up game physics
         self.physics_engine = arcade.PhysicsEnginePlatformer(self.player_sprite, gravity_constant = self.gravity, walls = self.scene["Walls"])
         #platforms will be walls that can move
 
-        self.camera = arcade.Camera(self.width, self.height)
+        self.camera = arcade.Camera(camera_width, camera_height)
 
     def on_key_press(self, key, modifiers):
         #have to used multiple if and elif statements because python has to switch case functions built in
