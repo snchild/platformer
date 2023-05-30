@@ -67,9 +67,13 @@ class myGame(arcade.Window): #myGame's parent class is arcade.Window
         f_9 = [[i, 534] for i in range(2448, 2769, 64)]
         f_10 = [[i, 804] for i in range(2256, 2768, 64)] + [[2320,868], [2960,804]]
         f_11 = [[1596, j] for j in range(1252, 1700, 64)] + [[1468,1380],[1532,1380], [1532, 1508]]
-        f_12 = [[1852,932]]
+        f_12 = [[1852,932],[1832,1550],[1886,1200],[2164,1000],[2320,1400],[2400,1100],[2500,1300],[2600,1050],[2700,950],[2900,1100],[2850,1400]]
+        f_13 = [[i, 1604] for i in range(96, 253, 64)] + [[i, 1732] for i in range(444, 1020, 64)] + [[i, 1732] for i in range(1148, 1405, 64)]
+        f_14 = [[i, 1699] for i in range(1660, 2045, 64)]
+        f_15 = [[i, 1603] for i in range(2173, 2896, 64)]
+        f_16 = [[2704,1731],[2768,1795],[2832,1827],[2896, 1827],[2960,1827]]
 
-        soil_coordinates = f_1 + f_2 + f_3 + f_4 + f_5 + f_6 + f_7 + f_8 + f_9 + f_10 + f_11 + f_12
+        soil_coordinates = f_1 + f_2 + f_3 + f_4 + f_5 + f_6 + f_7 + f_8 + f_9 + f_10 + f_11 + f_12 + f_13 + f_14 + f_15 + f_16
         for coor in soil_coordinates:
             wall = arcade.Sprite(soil_path, 0.5)
             wall.position = coor
