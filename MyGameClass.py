@@ -67,7 +67,7 @@ class myGame(arcade.Window): #myGame's parent class is arcade.Window
         f_9 = [[i, 534] for i in range(2448, 2769, 64)]
         f_10 = [[i, 804] for i in range(2256, 2768, 64)] + [[2320,868], [2960,804]]
         f_11 = [[1596, j] for j in range(1252, 1700, 64)] + [[1468,1380],[1532,1380], [1532, 1508]]
-        f_12 = [[1852,932],[1832,1550],[1886,1200],[2164,1000],[2320,1400],[2400,1100],[2500,1300],[2600,1050],[2700,950],[2900,1100],[2850,1400]]
+        f_12 = [[1852,932],[1870,1500],[1900,1168],[2164,1000],[2320,1400],[2400,1100],[2500,1250],[2600,950],[2700,1100],[2900,1100],[2950,1300]]
         f_13 = [[i, 1604] for i in range(96, 253, 64)] + [[i, 1732] for i in range(444, 1020, 64)] + [[i, 1732] for i in range(1148, 1405, 64)]
         f_14 = [[i, 1699] for i in range(1660, 2045, 64)]
         f_15 = [[i, 1603] for i in range(2173, 2896, 64)]
@@ -79,11 +79,17 @@ class myGame(arcade.Window): #myGame's parent class is arcade.Window
             wall.position = coor
             self.scene.add_sprite("Walls",wall)
 
+        #add door
+        door = arcade.Sprite("images\door_sprite.png",0.5)
+        door.position = [96,1668]
+        self.scene.add_sprite("Door", door)
+
         #set up game physics
-        self.physics_engine = arcade.PhysicsEnginePlatformer(self.player_sprite, gravity_constant = self.gravity, walls = self.scene["Walls"])
+        self.physics_engine = arcade.PhysicsEnginePlatformer(self.player_sprite, gravity_constant = self.gravity, walls = [self.scene["Walls"],self.scene["Door"]])
         #platforms will be walls that can move
 
         self.camera = arcade.Camera(camera_width, camera_height)
+        
 
     def on_key_press(self, key, modifiers):
         #have to used multiple if and elif statements because python has to switch case functions built in
@@ -120,7 +126,10 @@ class myGame(arcade.Window): #myGame's parent class is arcade.Window
 
         self.center_camera_on_player()
 
-
+        #check if the player has reached the "door"
+        if (self.player_sprite.position == (160,1668) or self.player_sprite.position == (96,1732)):
+            self.if_won()
+            
     def on_draw(self):
         #print("drawing myGame...")
         self.clear()
@@ -128,3 +137,7 @@ class myGame(arcade.Window): #myGame's parent class is arcade.Window
         #draw the objects on the screen
         self.scene.draw()
         self.camera.use()
+
+    def if_won(self):
+        print("Congradulations you won!")
+        arcade.close_window()
