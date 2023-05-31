@@ -11,6 +11,7 @@ class myGame(arcade.Window): #myGame's parent class is arcade.Window
         self.player_speed = speed
         self.player_jump_speed = jump_speed
         self.gravity = 1
+        self.door_locked = True
 
         self.scene = None #scene object (all the walls)
         self.physics_engine = None #physics engine
@@ -84,6 +85,12 @@ class myGame(arcade.Window): #myGame's parent class is arcade.Window
         door.position = [96,1668]
         self.scene.add_sprite("Door", door)
 
+        #add key
+        key = arcade.Sprite("images\key_sprite.png", 0.5)
+        key.position = [86,314]
+        self.scene.add_sprite("Key", key)
+        self.door_locked = True
+
         #set up game physics
         self.physics_engine = arcade.PhysicsEnginePlatformer(self.player_sprite, gravity_constant = self.gravity, walls = [self.scene["Walls"],self.scene["Door"]])
         #platforms will be walls that can move
@@ -126,9 +133,20 @@ class myGame(arcade.Window): #myGame's parent class is arcade.Window
 
         self.center_camera_on_player()
 
+        #check if the player has found the key
+        if arcade.check_for_collision_with_list(self.player_sprite,self.scene["Key"]):
+            #make key disappear
+            self.scene["Key"].remove
+            #unlock the door
+            self.door_locked = False
+            #show message saying door is unlocked
+            print("it's unlocked now")
+
         #check if the player has reached the "door"
-        if (self.player_sprite.position == (160,1668) or self.player_sprite.position == (96,1732)):
+        if (not self.door_locked and (self.player_sprite.position == (160,1668) or self.player_sprite.position == (96,1732))):
             self.if_won()
+        elif(self.player_sprite.position == (160,1668) or self.player_sprite.position == (96,1732)):
+            print("you need the key")
             
     def on_draw(self):
         #print("drawing myGame...")
