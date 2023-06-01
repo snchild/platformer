@@ -13,6 +13,7 @@ class myGame(arcade.Window): #myGame's parent class is arcade.Window
         self.gravity = 1
         self.locked_status = "locked"
         self.warning_message = ""
+        self.keys_found = 0
 
         self.scene = None #scene object (all the walls)
         self.physics_engine = None #physics engine
@@ -87,12 +88,17 @@ class myGame(arcade.Window): #myGame's parent class is arcade.Window
         door.position = [96,1668]
         self.scene.add_sprite("Door", door)
 
-        #add key
-        key = arcade.Sprite("images\key_sprite.png", 0.5)
-        key.position =[2965,868]
-        self.scene.add_sprite("Key", key)
+        #add keys
+        key_path = "images\key_sprite.png"
+        key_coordinates =[[2965,868],[2960, 102],[2960,1891],[1404,1076],[2320,1464]]
+        for coor in key_coordinates:
+            key = arcade.Sprite(key_path, 0.5)
+            key.position = coor
+            self.scene.add_sprite("Keys",key)
+
         self.locked_status = "locked"
         self.warning_message = ""
+        self.keys_found = 0
 
         #set up game physics
         self.physics_engine = arcade.PhysicsEnginePlatformer(self.player_sprite, gravity_constant = self.gravity, walls = [self.scene["Walls"],self.scene["Door"]])
@@ -139,13 +145,15 @@ class myGame(arcade.Window): #myGame's parent class is arcade.Window
         self.center_camera_on_player()
 
         #check if the player has found the key
-        key_list = arcade.check_for_collision_with_list(self.player_sprite,self.scene["Key"])
+        key_list = arcade.check_for_collision_with_list(self.player_sprite,self.scene["Keys"])
         if key_list:
             #make key disappear <- it doesn't disappear help
             key_list[0].remove_from_sprite_lists()
             #unlock the door
-            self.locked_status = "unlocked"
-            self.warning_message = ""
+            self.keys_found += 1
+            if(self.keys_found > 4):
+                self.locked_status = "unlocked"
+                self.warning_message = ""
 
         #check if the player has reached the "door"
         if ((self.locked_status == "unlocked") and (self.player_sprite.position == (160,1668) or self.player_sprite.position == (96,1732))):
@@ -163,8 +171,9 @@ class myGame(arcade.Window): #myGame's parent class is arcade.Window
 
         #draw the messages on the camera
         text = f"The door is {self.locked_status}"
-        arcade.draw_text(text, 20, 20,arcade.color.WHITE, 18)
-        arcade.draw_text(self.warning_message, 20, 60, arcade.color.WHITE, 18)
+        arcade.draw_text(text, 20, 46,arcade.color.WHITE, 18)
+        arcade.draw_text(f"Keys collected: {self.keys_found}/5",20,18,arcade.color.WHITE,18)
+        arcade.draw_text(self.warning_message, 20, 74, arcade.color.WHITE, 18)
 
     def if_won(self):
         print("Congradulations you won!")
