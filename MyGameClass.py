@@ -11,13 +11,15 @@ class myGame(arcade.Window): #myGame's parent class is arcade.Window
         self.player_speed = speed
         self.player_jump_speed = jump_speed
         self.gravity = 1
-        self.door_locked = True
+        self.locked_status = "locked"
+        self.warning_message = ""
 
         self.scene = None #scene object (all the walls)
         self.physics_engine = None #physics engine
         self.player_sprite = None
 
         self.camera = None
+        self.gui_camera = None
 
     def setup(self, width, height, camera_width, camera_height):
         #setting up the sprites here makes it easier to incorporate a reset button in the game
@@ -87,16 +89,19 @@ class myGame(arcade.Window): #myGame's parent class is arcade.Window
 
         #add key
         key = arcade.Sprite("images\key_sprite.png", 0.5)
-        key.position = [86,314]
+        key.position =[2965,868]
         self.scene.add_sprite("Key", key)
-        self.door_locked = True
+        self.locked_status = "locked"
+        self.warning_message = ""
 
         #set up game physics
         self.physics_engine = arcade.PhysicsEnginePlatformer(self.player_sprite, gravity_constant = self.gravity, walls = [self.scene["Walls"],self.scene["Door"]])
         #platforms will be walls that can move
 
+        #set up cameras
         self.camera = arcade.Camera(camera_width, camera_height)
-        
+        self.gui_camera = arcade.Camera(camera_width, camera_height)
+
 
     def on_key_press(self, key, modifiers):
         #have to used multiple if and elif statements because python has to switch case functions built in
@@ -134,27 +139,33 @@ class myGame(arcade.Window): #myGame's parent class is arcade.Window
         self.center_camera_on_player()
 
         #check if the player has found the key
-        if arcade.check_for_collision_with_list(self.player_sprite,self.scene["Key"]):
-            #make key disappear
-            self.scene["Key"].remove
+        key_list = arcade.check_for_collision_with_list(self.player_sprite,self.scene["Key"])
+        if key_list:
+            #make key disappear <- it doesn't disappear help
+            key_list[0].remove_from_sprite_lists()
             #unlock the door
-            self.door_locked = False
-            #show message saying door is unlocked
-            print("it's unlocked now")
+            self.locked_status = "unlocked"
+            self.warning_message = ""
 
         #check if the player has reached the "door"
-        if (not self.door_locked and (self.player_sprite.position == (160,1668) or self.player_sprite.position == (96,1732))):
+        if ((self.locked_status == "unlocked") and (self.player_sprite.position == (160,1668) or self.player_sprite.position == (96,1732))):
             self.if_won()
         elif(self.player_sprite.position == (160,1668) or self.player_sprite.position == (96,1732)):
-            print("you need the key")
-            
+            self.warning_message = "You need the key to unlock the door."
+   
     def on_draw(self):
         #print("drawing myGame...")
         self.clear()
 
         #draw the objects on the screen
+        self.camera.use() #this has to be before self.scene.draw 
         self.scene.draw()
-        self.camera.use()
+        self.gui_camera.use()
+
+        #draw the messages on the camera
+        text = f"The door is {self.locked_status}"
+        arcade.draw_text(text, 20, 20,arcade.color.WHITE, 18)
+        arcade.draw_text(self.warning_message, 20, 60, arcade.color.WHITE, 18)
 
     def if_won(self):
         print("Congradulations you won!")
