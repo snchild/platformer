@@ -20,7 +20,7 @@
 
 {Make a list of websites that you found helpful in this project}
 * [Python Arcade 2.6.17](https://api.arcade.academy/en/latest/examples/platform_tutorial/index.html)
-* [Web Site Name](http://url.link.goes.here)
+* [Python Arcade 2.6.17 Drawing Text](https://api.arcade.academy/en/latest/examples/drawing_text.html)
 
 # Future Work
 

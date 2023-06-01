@@ -154,7 +154,6 @@ class myGame(arcade.Window): #myGame's parent class is arcade.Window
             self.warning_message = "You need the key to unlock the door."
    
     def on_draw(self):
-        #print("drawing myGame...")
         self.clear()
 
         #draw the objects on the screen
