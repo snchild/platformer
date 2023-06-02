@@ -1,30 +1,22 @@
  # Overview
 
-{Talk about what you are trying to accomplish as a software engineer to further your learning.}
+At the beginning of this project I sought to understand how to create a game using python arcade. I achieved that. This game is a platformer game, where a player moves the purple square. Someone must find and collect the five key pieces, and then locate the door to win the game. The player can move the square using the arrow keys. No other controls are needed.
 
-{Provide a description the game that you wrote. Describe how to play your game.}
-
-{Describe your purpose for writing this software.}
-
-{Provide a link to your YouTube demonstration.  It should be a 4-5 minute demo of the game being played and a walkthrough of the code.}
+Below is a link to my demonstration on YouTube. 
 
 [Software Demo Video](http://youtube.link.goes.here)
 
 # Development Environment
 
-{Describe the tools that you used to develop the software}
-
-{Describe the programming language that you used and any libraries.}
+I used Visual Studio Code to develop this software, as well as python arcade. All of the code in this software is python. I did not use any libraries other than arcade.
 
 # Useful Websites
 
-{Make a list of websites that you found helpful in this project}
 * [Python Arcade 2.6.17](https://api.arcade.academy/en/latest/examples/platform_tutorial/index.html)
 * [Python Arcade 2.6.17 Drawing Text](https://api.arcade.academy/en/latest/examples/drawing_text.html)
 
 # Future Work
 
-{Make a list of things that you need to fix, improve, and add in the future.}
-* Item 1
-* Item 2
-* Item 3
+* Add another level
+* Use an easier system to place walls and other objects
+* Introduce enemies and harmful environment objects
