@@ -4,7 +4,7 @@ At the beginning of this project I sought to understand how to create a game usi
 
 Below is a link to my demonstration on YouTube. 
 
-[Software Demo Video](http://youtube.link.goes.here)
+[Software Demo Video](https://youtu.be/bjpaH4mHnFs)
 
 # Development Environment
 
